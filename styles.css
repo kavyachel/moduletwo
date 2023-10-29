@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap');
+
+h1, h2, #chart, #heatmap, .title {
+    text-align:center;
+}
+h2 {
+    margin-top: 30px;
+    font-weight: 800;
+}
+.body {
+    font-family: 'Manrope', sans-serif;
+    padding: 100px;
+    background-color: #74EBD5;
+    background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+img {
+    width: 100%;
+    max-width: 700px;
+}
+
+#chart {
+    width: 100%;
+    max-width: 1100px;
+    height: 700px;
+}
+/* .tooltip {
+    position: absolute;
+    visibility: hidden;
+    background-color: lightblue; /* Change to the background color you prefer */
+    /* color: black; /* Change the text color as needed 
+    padding: 40px; /* Add more padding as desired 
+    border: 1px solid gray; /* Add a border 
+    font-weight: 600;
+    font-family: 'Manrope', sans-serif;
+    border-radius: 25px;
+    width: 100px;
+    display: block;
+    z-index: 999;
+} */
+
+.section1, .section2, .section3, .section4 {
+    text-align:center;
+}
+
+
+
+.content {
+    padding: 45px;
+    background-color: #FAF9F6;
+    border-radius: 20px;
+    box-shadow: 10px 10px;
+}

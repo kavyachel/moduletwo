@@ -1,0 +1,64 @@
+food,characteristic,p_values
+Vitamin C,Atheist,0.0067496
+Zinc,Never Smoked,0.0155063
+Corn Chips,Cancer,0.0261627
+Table Salt,Cable TV,0.0387117
+Meat-eater,Currently Smoke,0.0426393
+Lemonade,Left-handed,0.0637838
+Sweets,Diabetes,0.119841
+Special-K,Car Crash,0.125225
+Hamburger Patty,No Crash,0.127188
+Beef or Pork,Smoke Often,0.138112
+Tortillas,Quit Smoking,0.188114
+Cabbage,Right Hand,0.204213
+Whole Grains,Smoke Rarely,0.255737
+Vitamin D,Dog-Owner,0.257948
+Steak,Cat-Owner,0.274226
+Alcoholic Beverages,Right Hand,0.297327
+Vitamin B12 Supplements,Diabetes,0.310578
+Beef,Cat-Owner,0.318511
+Meatballs,Never Smoked,0.330492
+Coffee,Democrats,0.335086
+Liver,Democrats,0.349001
+Salad Dressing,Jewish,0.374785
+Coffee,Cable-TV,0.376865
+Energy Drinks,Smoke Often,0.382792
+Apples,High SAT Math,0.388733
+Butter,Democrats,0.391709
+Frosted Flakes,Reported a rash,0.405083
+Vitamin B6,Car Crash,0.406659
+Fried or Breaded Fish,Smoke Rarely,0.412638
+Low-fat Milk,Dog-Owner,0.429714
+Chocolate/Candy,No Car Crash,0.432729
+Popsicles/Jello/Sherbet,No Car Crash,0.456037
+Coconut Oil,Dog-Owner,0.466505
+Carrots,High SAT Reading,0.50723
+Iced Tea,Smoke Rarely,0.507281
+Captain Crunch,Never Smoked,0.521568
+Chips,Democrats,0.525217
+Full Fat Yogurt,Belly,0.525238
+Salmon,Quit Smoking,0.55595
+Cakes,High SAT Math,0.593998
+Whole Grain Bread,No Car Crash,0.60177
+Corn,Car Crash,0.618035
+Plain or Multi-Grain Cheerios,Belly,0.644693
+Prenatal Vitamins,Jewish,0.645623
+Nuts,Currently Smoke,0.679704
+Decaf Coffee,Left-Handed,0.692685
+Sugary Beverages,Car Crash,0.696395
+Iced Tea,No Car Crash,0.699429
+Tuna,Democrats,0.699843
+Wholegrain Sandwich Buns,Democrats,0.726428
+Frozen Yogurt,Belly,0.737145
+Oil,Smoke Often,0.74683
+Light Beer,Smoke Rarely,0.752925
+Chex Mix,Smoke Often,0.782454
+Salad Dressing,High SAT Reading,0.790713
+Canned Fruit,Heart Disease,0.839774
+Chocolate/Candy,Diabetes,0.840747
+Energy Drinks,Democrats,0.853294
+Multigrain Bread,High SAT Math,0.903516
+Apples,Smoke Rarely,0.915479
+Whole Grain Cereal,Cable,0.948136
+Mustard/BBQ Sauce/Soy Sauce,Atheist,0.981224
+Lemonade,Cable,0.990284

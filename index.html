@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body class="body">
+    <div class="title">
+        <h1>What Is A Healthy Diet?</h1>
+        <p>COMP 790: Module 2 Project by Kavya Subramanian.</p>
+    </div>
+    <div class = "content">
+        <div class = "section1">
+            <h2>The Trouble With Figuring Out What to Eat</h2>
+            <p>As the calendar flips to a new year, millions vow to improve their dietary habits. This typically means sorting foods into moral categories: good/bad, healthy/unhealthy, nutritious/indulgent, slimming/fattening. But which foods belong where depends on who you ask.
+
+                <i>This data story is inspired by the article <a href="https://fivethirtyeight.com/features/you-cant-trust-what-you-read-about-nutrition/">You Can't Trust What You Read About Nutrition</a> originally published on FiveThirtyEight.com and it's associated <a href="https://github.com/fivethirtyeight/data/tree/master/nutrition-studies">dataset</a>.</i></p>
+        </div>
+
+
+        <div class = "section2">
+            <h2>Dietary Guidelines Are NOT Helpful</h2>
+            <p>The U.S. Dietary Guidelines Advisory Committee recently released its latest recommendations, defining a healthy diet as one emphasizing vegetables, fruits, whole grains, low-fat dairy, seafood, legumes, and nuts while limiting red and processed meat, refined grains, and sugary foods and drinks. Some cardiologists tout a Mediterranean diet abundant in olive oil, the American Diabetes Association endorses both low-carb and low-fat diets, and the Physicians Committee for Responsible Medicine promotes vegetarianism. Ask a die-hard CrossFit enthusiast and she may champion a <i>Paleo</i> diet modeled after what our Paleolithic ancestors supposedly ate. The author's colleague Walt Hickey swears by the keto diet.</p>
+            <p>Who's correct? It's difficult to say. When it comes to nutrition, everyone has an opinion. What no one has is an airtight case. The problem starts with a lack of consensus on what constitutes a healthy diet. Is the goal to make you slender? Build muscle? Strengthen bones? Or prevent heart disease, cancer or dementia? Whatever your concern, there's no shortage of diets or foods purported to help. Linking dietary patterns and individual foods to health factors is remarkably easy, as you'll soon see from the authors' little experiment.</p>
+            
+            <h2>Studying Nutrition is Inherently Flawed</h2>
+            <p>The authors&apos; foray into nutrition research shows studies on how foods influence health are inherently problematic. To understand why, we need to look at how these studies are done. First, it's challenging to know exactly what people eat, beyond locking them in a room and strictly controlling meals. So nearly all nutrition studies rely on people remembering and reporting their own consumption through food diaries, recalls, or food frequency questionnaires (FFQs).</p>
+            <p>FFQs ask about typical intake over months or years to capture regular eating beyond a few days. But memory can be faulty. People may underreport unhealthy foods or overestimate serving sizes. &quot;Doing dietary assessment is difficult,&quot; said Torin Block, CEO of NutritionQuest, which conducts FFQs. &quot;There&apos;s always error involved.&quot;</p>
+            
+            <h2>Self-Reports are Unreliable</h2>
+            <p>To demonstrate the limitations of FFQs, Block administered one to the authors and reader volunteers. Some questions were straightforward, like coffee habits. Others puzzled them, like serving sizes or tomato consumption over six months. They did their best to answer honestly, but comparing results showed inconsistencies. The FFQ deemed &quot;cheese, full fat&quot; and alcohol as their top calorie sources. Beyond that, their reported diets diverged, despite similar heights and weights.</p>
+            
+            <p>Here is what the data showed us:</p>
+            <div>
+                <img src="img.png"/>
+                <p style="font-size:12px;">This is a bar graph I drafted up from the authors' data using Figma.</p>
+            </div>
+            
+            <p>Clearly, there are large discrepanicies between the caloric intake recorded via food diaries versus the FFQs. Inaccuracies and ambiguity like this can get extremely dangerous when you're trying to derive
+                relationships between food and other characteristics. Which brings us to our next point...
+            </p>
+        </div>
+
+        <div class = "section3">
+            <h2>Data Dredging Produces Misleading Findings</h2>
+            <p>FFQ problems go deeper. They produce massive, multidimensional data, allowing false correlations through cherry-picking, said statistician Veronica Vieland. The authors did 27,716 regressions on their 54-response FFQ dataset and easily found spurious relationships. With that many possibilities, false positives are guaranteed, Vieland said. They also found real but meaningless correlations, like meat trimmers being more likely atheists.
+            </p>
+            <p>P-values measure the statistical significance of an observed correlation between two variables in a data set. Specifically, a lower p-value indicates a stronger likelihood that the correlation is not due to chance alone. Food frequency questionnaires (FFQs) often generate extensive data with many variables to analyze. While large data sets provide more statistical power, they also increase the risk of false positives through cherry-picking of variable combinations that produce low p-values by chance, known as <a href="https://fivethirtyeight.com/features/science-isnt-broken/#part2">p-hacking</a>. For instance, this sample data set of self-reported dietary factors exhibits a range of p-values for hypothesized correlations: </p>
+            <!--Visualization 1-->
+            <div id="chart">
+
+            </div>
+            <script>
+                const margin = {top: 50, right: 50, bottom: 50, left: 50},
+                    width = 1100 - margin.left - margin.right, 
+                    height = 600 - margin.top - margin.bottom;
+                
+                const svg = d3.select("#chart").append("svg").attr("width", "100%").attr("height", height + margin.top + margin.bottom).append("g").attr("transform", `translate(${margin.left}, ${margin.top})`).attr("max-width", width);
+            
+                d3.csv("p_dataset.csv", function(d) {
+                    return {
+                            food: d["food"],
+                            characteristic: d["characteristic"],
+                            p_value: +d["p_values"]
+                        };
+                }).then( function(data) {
+            
+                    //Add X axis
+                    const x = d3.scaleLinear().domain([0, data.length - 1]).range([0, width]);
+            
+                    //Add Y axis
+                    const y = d3.scaleLinear().domain([0, 1]).range([height, 0]);
+            
+                    const xaxis = svg.append("g").attr("transform", `translate(0, ${height})`).call(d3.axisBottom(x).ticks(data.length).tickFormat(index => {
+                            if(index === 0) {
+                                return `Weakly Correlated`; 
+                            } else if(index === data.length - 1) {
+                                return `Strongly correlated`;
+                            }
+                            return ''; // no tick for other indices
+                            }))
+                            
+                    const yaxis = svg.append("g").call(d3.axisLeft(y));
+
+                    xaxis.selectAll("text").style("font-family", "Manrope").style("font-size", "11px");
+            
+                    const color = d3.scaleSequential().domain(d3.extent(data, d => d.p_value)).interpolator(d3.interpolateViridis);
+            
+                    const bubble = d3.scaleSequential().domain([0, d3.max(data, d => d.p_value)]).range([0, 10]);
+            
+                    var tooltip = d3.select("#chart")
+                        .append("div")
+                        .style("opacity", 0)
+                        .attr("class", "tooltip")
+                        .style("background-color", "white")
+                        .style("border", "solid")
+                        .style("border-width", "2px")
+                        .style("border-radius", "5px")
+                        .style("padding", "5px")
+
+                    //Add dots
+                    svg.append("g")
+                    .selectAll("dot")
+                    .data(data)
+                    .join("circle")
+                    .attr("r", 5)
+                    .attr("cx", function (d, i) { return x(i); })
+                    .attr("cy", function (d) { return y(d.p_value); })
+                    .style("fill", function (d) { return color(d.p_value)})
+                    .style("opacity", .5)
+                    .on("mouseover", function(e, d) {
+                        return tooltip
+                        .style("opacity", 1)
+                        d3.select(this)
+                        .style("stroke", "black")
+                        .style("opacity", 1)
+                    })
+                    .on("mousemove", function(d) {
+                        console.log(d);
+                        return tooltip
+                        .html(d.toElement.__data__.food + " & " + d.toElement.__data__.characteristic + "<br> p-Value: " + d.toElement.__data__.p_value)
+                        .style("left", (d3.select(this).attr("cx")) + "px")
+                        .style("top", (d3.select(this).attr("cy")) + "px")
+                    })
+                    .on("mouseleave", function(d) {
+                        return tooltip.style("opacity", 0)
+                        d3.select(this)
+                        .style("stroke", "none")
+                        .style("opacity", 0.8)
+                    })
+                })
+            
+            </script>
+
+    
+            <p>As you can see, p-hacking unreliable datasets can lead to some pretty humorous results. Personally, I find the link between Democrats and Wholegrain Sandwich Buns pretty hilarious. However, it's important to note that this can also lead to the spread of dangerous misinformation. In a <a href="https://ajcn.nutrition.org/article/S0002-9165(23)05381-9/fulltext">2013 analysis</a> published in the American Journal of Clinical Nutrition, Ioannidis and a colleague selected 50 common ingredients at random from a cookbook and looked for studies evaluating each food&apos;s association to cancer risk. It turned out that studies had found a link between <a href="http://ajcn.nutrition.org/content/97/1/127.full">80 percent</a> of the ingredients (including salt, eggs, butter, lemon, bread and carrots) and cancer. Some of those studies pointed to an increased risk of cancer, others suggested a decreased risk, but the size of the reported effects were &quot;implausibly large,&quot; Ioannidis said, while the evidence was weak. Here is a heatmap depicting the frequencies of various food groups eaten by different cancer patients. This data may lead someone to conclude that tofu causes cancer, when there isn't much actual evidence to back it.</p>
+            <!-- Visualization 2 -->
+            <div id="heatmap">
+
+            </div>
+            <script>
+                // Load CSV 
+                d3.csv('cancer_dataset.csv').then(data => {
+
+                // Get column names 
+                const columns = data.columns.slice(1);
+
+                const margin = { top: 40, right: 40, bottom: 40, left: 40 };
+                const width = 1200; // Desired width including padding
+                const height = 600; // Desired height including padding
+                
+                const cellSize = Math.min((width - margin.left - margin.right) / columns.length, (height - margin.top - margin.bottom) / data.length);
+
+                // Create scales
+                const xScale = d3.scaleBand()
+                    .domain(columns)
+                    .range([margin.left, margin.left + columns.length * cellSize]) 
+                    .padding(0.01);
+
+                const yScale = d3.scaleBand()
+                    .domain(data.map(d => d.ID))
+                    .range([margin.top, margin.top + data.length * cellSize])
+                    .padding(0.01);
+
+                // Create SVG
+                const svg = d3.select('#heatmap').append('svg')
+                .attr('width', "100%")
+                .attr("max-width", width)
+                .attr('height', height);
+                
+                const tooltip = d3.select('#heatmap').append('div')
+                .attr('class', 'tooltip')
+                .style('display', 'none');
+
+                function cellHovered(cell) {
+                    // Change the background color of the cell
+                    d3.select(cell)
+                        .style('fill', 'lightblue');
+
+                    // Get the column name (food group)
+                    const columnName = d3.select(cell).datum().key;
+
+                    // Display the column name (food group) in a tooltip or a div
+                    tooltip.style('display', 'block')
+                        .html(`${columnName}`).style("background-color", "white")
+                        .style("border", "solid")
+                        .style("border-width", "2px")
+                        .style("border-radius", "5px")
+                        .style("padding", "5px")
+                }
+
+                // Define a function to restore default styles
+                function restoreStyles() {
+                    d3.selectAll('rect')
+                        .style('fill', d => `rgb(${d.value * 15}, 0, ${d.value * 20})`);
+
+                    d3.select('.tooltip').style('display', 'none');
+                }
+
+                //console.log(data)
+                svg.selectAll('rect')
+                    .data(data)
+                    .enter()
+                    .append('g')
+                    .attr('transform', d => `translate(0, ${yScale(d.ID)})`)
+                    .selectAll('rect')
+                    .data(d => columns.map(key => ({ key, value: +d[key] })))
+                    .enter()
+                    .append('rect')
+                    .attr('x', d => xScale(d.key))
+                    .attr('width', xScale.bandwidth())
+                    .attr('height', yScale.bandwidth())
+                    .style('fill', d => `rgb(${d.value * 15}, 0, ${d.value * 20})`)
+                    .on('mouseover', function (d) {
+                        cellHovered(this);
+                    })
+                    .on('mouseout', function () {
+                        restoreStyles();
+                    });
+
+
+            });     
+            </script>
+            
+        </div>
+        
+        
+        <div class = "section4">
+            <h2>So...What is a Healthy Diet?</h2>
+            <p>FFQs have flaws but few alternatives, said Harvard&apos;s Jorge Chavarro. We may have reached the limits of current methods. These studies also suffer a fundamental issue - we expect far too much precision. Can blueberries protect cognition? Will bacon cause colon cancer? But these study designs are too crude to answer with such specificity.
+
+                We likely overanalyze nutrition, said researcher Edward Archer. Beyond basic energy, protein and nutrients, our bodies adapt. The takeaway: We're somewhat poor at objectively judging what we need. Even so, we persist in the search for nutritional panaceas. We want to regain control and protect against disease by optimizing diet. Science has yet to find an elixir for eternal health, but we remain determined to keep trying.</p>
+        </div>
+    </div>  
+</body>
